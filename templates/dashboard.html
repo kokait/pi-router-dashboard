@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pi Router Dashboard</title>
+</head>
+<body>
+    <h1>🛡️ Pi Router Dashboard</h1>
+
+    <ul>
+        <li><strong>Hostname:</strong> {{ hostname }}</li>
+        <li><strong>Tailscale:</strong> {{ tailscale }}</li>
+        <li><strong>Public IP:</strong> {{ ip }}</li>
+    </ul>
+
+    <h2>📋 Connected Devices</h2>
+    <table border="1">
+        <tr><th>Hostname</th><th>MAC</th><th>IP</th><th>Last Seen</th></tr>
+        {% for device in leases %}
+        <tr>
+            <td>{{ device.hostname }}</td>
+            <td>{{ device.mac }}</td>
+            <td>{{ device.ip }}</td>
+            <td>{{ device.time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>🛠 Actions</h2>
+    <form method="POST" action="/backup">
+        <button type="submit">📦 Manual Backup</button>
+    </form>
+    <form method="POST" action="/restart-wifi">
+        <button type="submit">📡 Restart Wi-Fi</button>
+    </form>
+    <form method="POST" action="/reboot">
+        <button type="submit">🔁 Reboot Pi</button>
+    </form>
+</body>
+</html>

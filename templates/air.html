@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AirGradient Status</title>
+</head>
+<body>
+  <h2>AirGradient Sensor Data</h2>
+  {% if data.error %}
+    <p style="color:red;">Error: {{ data.error }}</p>
+  {% else %}
+  <ul>
+    <li>PM2.5: {{ data.pm2_5 }} µg/m³</li>
+    <li>Temperature: {{ data.temp }} °C</li>
+    <li>Humidity: {{ data.humidity }} %</li>
+    <li>CO₂: {{ data.co2 }} ppm</li>
+    <li>TVOC Index: {{ data.tvoc }}</li>
+    <li>NOx Index: {{ data.nox }}</li>
+  </ul>
+  {% endif %}
+</body>
+</html>
