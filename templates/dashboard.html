@@ -1,39 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Pi Router Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f8f8;
+        }
+        h1, h3 {
+            color: #333;
+        }
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>🛡️ Pi Router Dashboard</h1>
+    <h1>Pi Router Dashboard</h1>
 
-    <ul>
-        <li><strong>Hostname:</strong> {{ hostname }}</li>
-        <li><strong>Tailscale:</strong> {{ tailscale }}</li>
-        <li><strong>Public IP:</strong> {{ ip }}</li>
-    </ul>
+    <div class="section">
+        <h3>System Info</h3>
+        <p><strong>Hostname:</strong> {{ hostname }}</p>
+        <p><strong>Public IP:</strong> {{ public_ip }}</p>
+    </div>
 
-    <h2>📋 Connected Devices</h2>
-    <table border="1">
-        <tr><th>Hostname</th><th>MAC</th><th>IP</th><th>Last Seen</th></tr>
-        {% for device in leases %}
-        <tr>
-            <td>{{ device.hostname }}</td>
-            <td>{{ device.mac }}</td>
-            <td>{{ device.ip }}</td>
-            <td>{{ device.time }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="section">
+        <h3>Tailscale Status</h3>
+        <pre>{{ tailscale_status }}</pre>
+    </div>
 
-    <h2>🛠 Actions</h2>
-    <form method="POST" action="/backup">
-        <button type="submit">📦 Manual Backup</button>
-    </form>
-    <form method="POST" action="/restart-wifi">
-        <button type="submit">📡 Restart Wi-Fi</button>
-    </form>
-    <form method="POST" action="/reboot">
-        <button type="submit">🔁 Reboot Pi</button>
-    </form>
+    <div class="section">
+        <h3>Connected Wi-Fi Clients</h3>
+        {% if wifi_clients %}
+            <ul>
+                {% for mac in wifi_clients %}
+                    <li>{{ mac }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No clients connected.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
